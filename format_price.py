@@ -2,7 +2,7 @@ import re
 import argparse
 
 
-def get_price():
+def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--price',
@@ -13,14 +13,14 @@ def get_price():
 
 
 def format_price(price):
-    if isinstance(price, (int, float)):
-        return "{0:.2f}".format(price)
-    elif re.search('\d+[.,]?\d', price):
-        return "{0:.2f}".format(float(price.replace(',', '.')))
+    if isinstance(price, (int, float)) or isinstance(price, str) and re.search('\d+[.]?\d', price):
+        price = float(price)
+        return format(price, ',.0f').replace(',', ' ')
     else:
         raise ValueError('Incorrect Value')
 
 
 if __name__ == '__main__':
-    price = get_price()
-    print(format_price(price.price))
+    args = parse_arguments()
+    price = args.price
+    print(format_price(price))
