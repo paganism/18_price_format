@@ -15,9 +15,9 @@ def parse_arguments():
 def format_price(price):
     if isinstance(price, (int, float)) or isinstance(price, str) and re.search('\d+[.]?\d', price):
         price = float(price)
-        return format(price, ',.0f').replace(',', ' ')
+        return format(price, ',.2f').replace(',', ' ')
     else:
-        raise ValueError('Incorrect Value')
+        return None
 
 
 if __name__ == '__main__':
