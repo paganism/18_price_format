@@ -5,11 +5,11 @@ from format_price import format_price
 class TestFormatPrice(unittest.TestCase):
     def test_correct_int(self):
         price = 101
-        self.assertEquals('101.00', format_price(price))
+        self.assertEquals('101', format_price(price))
 
     def test_correct_long_int(self):
         price = 123456789
-        self.assertEquals('123 456 789.00', format_price(price))
+        self.assertEquals('123 456 789', format_price(price))
 
     def test_correct_float(self):
         price = 101.116
@@ -27,20 +27,15 @@ class TestFormatPrice(unittest.TestCase):
         price = '101.9999'
         self.assertEquals('102.00', format_price(price))
 
-    def test_correct_string_with_spaces(self):
-        price = '   101.9999   '
-        self.assertEquals('102.00', format_price(price))
-
-    def test_incorrect_string_with_comma(self):
-        with self.assertRaises(ValueError):
-            format_price('101,45')
-
     def test_incorrect_string(self):
         self.assertEquals(None, format_price('qwerty'))
 
+    def test_incorrect_string_with_spaces(self):
+        price = '     101.9999     '
+        self.assertEquals(None, format_price(price))
+
     def test_incorrect_string_with_digit(self):
-        with self.assertRaises(ValueError):
-            format_price('rhr123qwbey.4r58ty')
+        self.assertEquals(None, format_price('rhr123qwbey.4r58ty'))
 
     def test_incorrect_list_of_number(self):
         self.assertEquals(None, format_price([101.99]))
