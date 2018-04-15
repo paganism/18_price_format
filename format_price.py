@@ -20,7 +20,7 @@ def format_price(price):
                 return format(price, ',.0f').replace(',', ' ')
             else:
                 return format(price, ',.2f').replace(',', ' ')
-        except:
+        except ValueError:
             return None
 
 
