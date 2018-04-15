@@ -25,10 +25,38 @@ class TestFormatPrice(unittest.TestCase):
 
     def test_correct_string(self):
         price = '101.9999'
-        self.assertEquals('102.00', format_price(price))
+        self.assertEquals('102', format_price(price))
+
+    def test_correct_float_with_zer_after_point(self):
+        price = 101.0009
+        self.assertEquals('101', format_price(price))
+
+    def test_only_zero(self):
+        price = 000000000.0000000
+        self.assertEqual('0', format_price(price))
+
+    def test_correct_small_float(self):
+        price = 00000.009
+        self.assertEqual('0.01', format_price(price))
+
+    def test_incorrect_exponential_number(self):
+        price = 1.234568e+04
+        self.assertEqual('12 345.68', format_price(price))
 
     def test_incorrect_string(self):
         self.assertEquals(None, format_price('qwerty'))
+
+    def test_incorrect_string_number_with_comma(self):
+        self.assertEquals(None, format_price('55,56'))
+
+    def test_incorrect_string_number_with_underscore(self):
+        self.assertEquals(None, format_price('55_56'))
+
+    def test_incorrect_string_number_with_space(self):
+        self.assertEquals(None, format_price('55 56'))
+
+    def test_incorrect_tuple_of_numbers(self):
+        self.assertEquals(None, format_price((55, 56)))
 
     def test_incorrect_string_with_spaces(self):
         price = '     101.9999     '
@@ -45,6 +73,12 @@ class TestFormatPrice(unittest.TestCase):
 
     def test_incorrect_dict(self):
         self.assertEquals(None, format_price({'number': 101.50}))
+
+    def test_incorrect_boolean_value(self):
+        self.assertEqual(None, format_price(True))
+
+    def test_incorrect_complex_number(self):
+        self.assertEqual(None, format_price(complex(3, 4)))
 
 
 if __name__ == '__main__':
