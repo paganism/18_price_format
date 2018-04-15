@@ -49,18 +49,11 @@ class TestFormatPrice(unittest.TestCase):
     def test_incorrect_string_number_with_comma(self):
         self.assertEquals(None, format_price('55,56'))
 
-    def test_incorrect_string_number_with_underscore(self):
-        self.assertEquals(None, format_price('55_56'))
-
     def test_incorrect_string_number_with_space(self):
         self.assertEquals(None, format_price('55 56'))
 
     def test_incorrect_tuple_of_numbers(self):
         self.assertEquals(None, format_price((55, 56)))
-
-    def test_incorrect_string_with_spaces(self):
-        price = '     101.9999     '
-        self.assertEquals(None, format_price(price))
 
     def test_incorrect_string_with_digit(self):
         self.assertEquals(None, format_price('rhr123qwbey.4r58ty'))

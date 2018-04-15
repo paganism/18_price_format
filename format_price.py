@@ -13,17 +13,15 @@ def parse_arguments():
 
 
 def format_price(price):
-    if (isinstance(price, (int, float)) and
-            not isinstance(price, bool)) or (
-                isinstance(price, str) and
-                re.search('(^\d+(\.\d+)$)|^\d*$', price)):
-        price = float(price)
-        if round(price, 2) % 1 == 0:
-            return format(price, ',.0f').replace(',', ' ')
-        else:
-            return format(price, ',.2f').replace(',', ' ')
-    else:
-        return None
+    if not isinstance(price, bool):
+        try:
+            price = round(float(price), 2)
+            if price.is_integer():
+                return format(price, ',.0f').replace(',', ' ')
+            else:
+                return format(price, ',.2f').replace(',', ' ')
+        except:
+            return None
 
 
 if __name__ == '__main__':
